@@ -1,0 +1,15 @@
+{
+  "short_name": "The Farming",
+  "name": "The Farming",
+  "icons": [
+    {
+      "src": "./logo.png",
+      "sizes": "150x150",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#73A184",
+  "background_color": "#fffcfa"
+}
