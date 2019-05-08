@@ -11,6 +11,7 @@
     "history": "^4.9.0",
     "immutable": "^4.0.0-rc.12",
     "node-sass": "^4.12.0",
+    "numeral": "^2.0.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
@@ -21,8 +22,11 @@
     "redux": "^4.0.1",
     "redux-immutable": "^4.0.0",
     "redux-thunk": "^2.3.0",
+    "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.1",
     "styled-components": "^4.2.0",
+    "superagent": "^5.0.5",
+    "superagent-prefix": "^0.0.2",
     "webfontloader": "^1.6.28"
   },
   "scripts": {

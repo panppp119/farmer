@@ -1,7 +1,5 @@
-import { schema } from 'normalizr'
+import { schema } from "normalizr";
 
-const userSchema = new schema.Entity('users', {
-  
-})
+const userSchema = new schema.Entity("users", {});
 
-export default userSchema
+export default userSchema;

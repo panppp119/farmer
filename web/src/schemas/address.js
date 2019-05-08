@@ -1,11 +1,7 @@
-import { schema } from 'normalizr'
+import { schema } from "normalizr";
 
-import addressOwnerSchema from './unions/addressOwner'
+const addressSchema = new schema.Entity("addresses");
 
-const addressSchema = new schema.Entity('addresses')
+addressSchema.define({});
 
-addressSchema.define({
-  owner: addressOwnerSchema
-})
-
-export default addressSchema
+export default addressSchema;

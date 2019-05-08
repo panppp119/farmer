@@ -8,13 +8,18 @@ import Image from "components/Image";
 
 class MainBar extends React.Component {
   render() {
-    const { auth } = this.props;
+    const { auth, menu } = this.props;
 
     return (
       <div className='main-bar'>
         <AppBar position='fixed' color='primary'>
           <Toolbar style={{ justifyContent: "space-between" }}>
-            <Link className='logo' to='/' style={{ display: "flex" }}>
+            <Link
+              className='logo'
+              to='/'
+              style={{ display: "flex" }}
+              onClick={() => this.props.toggleMenu(false)}
+            >
               <Image url={require("assets/logo/logo_w.png")} name='logo' />
               <Image
                 url={require("assets/logo/title_w.png")}
@@ -31,7 +36,7 @@ class MainBar extends React.Component {
                 minWidth: "auto",
                 display: auth.size === 0 && "none"
               }}
-              onClick={() => this.props.toggleMenu()}
+              onClick={() => this.props.toggleMenu(!menu)}
             >
               <FormatAlignRight />
             </Button>

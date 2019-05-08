@@ -1,11 +1,9 @@
-import { schema } from 'normalizr'
+import { schema } from "normalizr";
 
-import userSchema from 'schemas/unions/user'
-import walletTransactionSchema from 'schemas/walletTransaction'
+import userSchema from "schemas/user";
 
-const walletSchema = new schema.Entity('wallet', {
-  owner: userSchema,
-  transactions: [walletTransactionSchema]
-})
+const walletSchema = new schema.Entity("wallet", {
+  owner: userSchema
+});
 
-export default walletSchema
+export default walletSchema;

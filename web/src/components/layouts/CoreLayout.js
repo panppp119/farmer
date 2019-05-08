@@ -17,14 +17,18 @@ class CoreLayout extends React.Component {
     this.props.checkAuth();
   }
 
-  toggleMenu = () => {
-    this.setState({ menu: !this.state.menu });
+  toggleMenu = bool => {
+    this.setState({ menu: bool });
   };
 
   render() {
     return (
       <div className='corelayout'>
-        <MainBar toggleMenu={this.toggleMenu} auth={this.props.auth} />
+        <MainBar
+          toggleMenu={this.toggleMenu}
+          menu={this.state.menu}
+          auth={this.props.auth}
+        />
         <MenuBar
           menu={this.state.menu}
           signout={this.props.signout}
