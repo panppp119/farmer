@@ -8,6 +8,8 @@ import Image from "components/Image";
 
 class MainBar extends React.Component {
   render() {
+    const { auth } = this.props;
+
     return (
       <div className='main-bar'>
         <AppBar position='fixed' color='primary'>
@@ -24,7 +26,11 @@ class MainBar extends React.Component {
             </Link>
 
             <Button
-              style={{ color: "#f8f8f8", minWidth: "auto" }}
+              style={{
+                color: "#f8f8f8",
+                minWidth: "auto",
+                display: auth.size === 0 && "none"
+              }}
               onClick={() => this.props.toggleMenu()}
             >
               <FormatAlignRight />

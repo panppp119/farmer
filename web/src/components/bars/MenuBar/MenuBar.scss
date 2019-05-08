@@ -16,9 +16,14 @@
     padding: 16px;
     outline: none;
     text-decoration: none;
+    color: var(--black);
 
-    span {
-      margin-left: 16px;
+    &:hover {
+      color: var(--primary);
+    }
+
+    svg {
+      margin-right: 16px;
     }
   }
 }

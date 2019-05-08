@@ -1,11 +1,12 @@
 import React from "react";
 import Helmet from "react-helmet";
 import { connect } from "react-redux";
+import { Map } from "immutable";
 
 import MainBar from "components/bars/MainBar";
 import MenuBar from "components/bars/MenuBar";
 import MainView from "components/views/MainView";
-import { checkAuth } from "actions/auth";
+import { checkAuth, signout } from "actions/auth";
 
 class CoreLayout extends React.Component {
   state = {
@@ -23,8 +24,12 @@ class CoreLayout extends React.Component {
   render() {
     return (
       <div className='corelayout'>
-        <MainBar toggleMenu={this.toggleMenu} />
-        <MenuBar menu={this.state.menu} />
+        <MainBar toggleMenu={this.toggleMenu} auth={this.props.auth} />
+        <MenuBar
+          menu={this.state.menu}
+          signout={this.props.signout}
+          toggleMenu={this.toggleMenu}
+        />
 
         <Helmet title='The Farming' />
 
@@ -34,11 +39,16 @@ class CoreLayout extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.getIn(["auth", "user"], Map())
+});
+
 const mapDispatchToProps = {
-  checkAuth: () => checkAuth()
+  checkAuth: () => checkAuth(),
+  signout: () => signout()
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CoreLayout);

@@ -11,7 +11,6 @@ import theme from "styles/theme";
 import configureStore, { history } from "utils/store";
 
 const store = configureStore();
-const auth = localStorage.getItem("token") !== null;
 
 const Home = lazy(() => import("./routes/apps/Home"));
 const SignIn = lazy(() => import("./routes/apps/SignIn"));
@@ -21,7 +20,7 @@ function PrivateRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={props =>
-        auth ? (
+        localStorage.getItem("token") !== null ? (
           <Component {...props} />
         ) : (
           <Redirect

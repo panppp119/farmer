@@ -63,16 +63,16 @@ export const signin = (data, schema) => (dispatch, getState) => {
 };
 
 export const signout = () => (dispatch, getState) => {
-  auth.signOut().then(() => {
-    dispatch({ type: SIGN_IN_SUCCEEDED });
-  });
+  auth.signOut();
+  localStorage.removeItem("token");
+  dispatch({ type: SIGN_OUT_SUCCEEDED });
 };
 
 export const checkAuth = schema => (dispatch, getState) => {
   auth.onAuthStateChanged(user => {
-    const token = localStorage.getItem("token");
+    var token = localStorage.getItem("token");
 
-    if (token !== null) {
+    if (token !== null && token === user.uid) {
       var uid = user.uid;
       var phone_number = user.phoneNumber;
       // var provider_data = user.providerData;
