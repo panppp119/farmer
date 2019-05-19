@@ -1,18 +1,18 @@
 import { connect } from "react-redux";
 
-import { signin } from "actions/auth";
+import { register } from "actions/auth";
 
-import SignIn from "./SignIn";
+import Register from "./Register";
 
 const mapStateToProps = state => ({
   loadingAuth: state.getIn(["auth", "loading"], false)
 });
 
 const mapDispatchToProps = {
-  signin: data => signin(data)
+  signup: data => register(data)
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignIn);
+)(Register);

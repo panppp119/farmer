@@ -4,10 +4,10 @@ import {
   SIGN_IN,
   SIGN_IN_SUCCEEDED,
   SIGN_OUT,
-  SIGN_OUT_SUCCEEDED,
-  SUBMIT_PHONE_NUMBER,
-  CANCEL_VERIFICATION
+  SIGN_OUT_SUCCEEDED
 } from "actions/auth";
+
+import { ADD_FLASH_MESSAGE } from 'actions/ui'
 
 const initialState = fromJS({});
 
@@ -20,20 +20,16 @@ export default (
     case SIGN_OUT:
       return state.set("loading", true);
 
-    case SUBMIT_PHONE_NUMBER:
-      return state.set("loading", false).set("verifyCode", true);
-
     case SIGN_IN_SUCCEEDED:
       return state
-        .set("user", fromJS(response))
+        .set("user", fromJS(response.body))
         .set("loading", false)
-        .set("verifyCode", false);
 
     case SIGN_OUT_SUCCEEDED:
       return state.set("user", fromJS({})).set("loading", false);
 
-    case CANCEL_VERIFICATION:
-      return state.set("verifyCode", false);
+    case ADD_FLASH_MESSAGE:
+      return state.set("loading", false);
 
     default:
       return state;

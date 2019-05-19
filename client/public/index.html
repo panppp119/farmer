@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/logo.png" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/logo_512.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#73A184" />
     <!--
@@ -20,6 +20,10 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>The Farming</title>
+
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=%REACT_APP_GOOGLE_MAP_KEY%&libraries=places">
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

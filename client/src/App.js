@@ -14,6 +14,8 @@ const store = configureStore();
 
 const Home = lazy(() => import("./routes/apps/Home"));
 const SignIn = lazy(() => import("./routes/apps/SignIn"));
+const Register = lazy(() => import("./routes/apps/Register"));
+const Profile = lazy(() => import("./routes/apps/Profile"));
 
 function PrivateRoute({ component: Component, ...rest }) {
   return (
@@ -44,8 +46,11 @@ const App = () => {
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
                 <Route path='/sign_in' component={SignIn} />
+                <Route path='/register' component={Register} />
 
                 <PrivateRoute exact path='/' component={Home} />
+                <PrivateRoute exact path='/profile' component={Profile} />
+                <PrivateRoute exact path='/profile' component={Profile} />
               </Switch>
             </Suspense>
           </CoreLayout>

@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
-const sql = require('./db.js')
-const User = require('./users.js')
+const knex = require('./db.js')
 
 const Auth = (auth) => {
   this.phone_number = auth.phone_number
+  this.password = auth.password
   this.user_id = auth.user_id
   this.access_token = auth.access_token
   this.active = auth.active
@@ -13,100 +13,62 @@ const Auth = (auth) => {
 
 Auth.signin = (body, result) => {
   let phone_number = body.phone_number
+  let password = body.password
+  let now = new Date()
 
-  sql.query(`
-    SELECT * FROM users WHERE phone_number = ?
-  `, [phone_number], (err, res) => {
-    if (err) result(err, null)
+  knex('users').where({ phone_number })
+  .then(data => {
+    let user = data
 
-    let user = res
-
-    if (user.length){
-      // create a token using user name and password vaild for 24 hours
-      let token_payload = { phone_number: user[0].phone_number };
+    if (user.length !== 0) {
+      let token_payload = { password: user[0].password };
       let token = jwt.sign(token_payload, "t-herb_farmer", { expiresIn: '24h' });
       let response = {
-        // message: 'Token Created, Authentication Successful!',
         access_token: token
-      };
-
-      const update = {
-        access_token: token,
-        updated_at: new Date()
       }
 
-      sql.query(`
-        UPDATE auth
-        SET ?
-        WHERE ?
-      `, [update, { user_id: user[0].id }], (err, res) => {
-        if (err) console.log(err)
-      })
-        // return the information including token as JSON
-      return result({ ...response, currentUser: user[0] });
+      var update = {
+        access_token: token,
+        updated_at: now
+      }
+
+      knex('auth')
+        .where({ user_id: user[0].id })
+        .update(update)
+        .then(data => {
+          let id = user[0].id
+
+          knex('users').where({ phone_number }).then(userData => {
+            result(null, { ...response, currentUser: userData[0] })
+          })
+        })
     }
     else {
-      return res.status("401").json("Authentication failed. user not found.");
+      result({ error: 'ไม่มีข้อมูลในระบบ กรุณาลองใหม่อีกครั้ง'}, null)
     }
   })
 }
 
 Auth.signup = (body, result) => {
-  let new_user = {
+  const new_user = {
     ...body,
     created_at: new Date(),
     updated_at: new Date()
   }
+  knex('users').insert(new_user).then(data => {
+    let id = user[0].id
 
-  sql.query(`
-    INSERT INTO users
-    set ?
-  `, [new_user],  (err, res) => {
-    if (err)
-      result(err, null)
-
-    let token = jwt.sign(token_payload, "t-herb_farmer", { expiresIn: '24h' });
-    let id = res.insertId
-    let user_role = {
-      user_id: id,
-      role_id: user.role_id,
-      created_at: new Date(),
-      updated_at: new Date()
-    }
-
-    let auth = {
-      user_id: id,
-      phone_number: new_user.phone_number,
-      access_token: token,
-      created_at: new Date(),
-      updated_at: new Date()
-    }
-
-    let response = { access_token: token }
-
-    sql.query(`
-      INSERT INTO user_roles
-      SET ?
-    `, [user_role], (err, res) => {
-      if (err)
-        result(err, null)
+    knex('users').where({ id }).then(userData => {
+      result({ ...response, currentUser: userData[0] })
     })
+  })
+}
 
-    sql.query(`
-      INSERT INTO auth
-      SET ?
-    `, [auth], (err, res) => {
-      if (err)
-        result(err, null)
-    })
+Auth.signout = (body, result) => {
+  let access_token = body.access_token
 
-    sql.query(`
-      SELECT * FROM users WHERE id = ?
-    `, [id], (err, res) => {
-      if (err) console.log(err)
-
-      return result({ ...response, currentUser: res[0] });
-    })
+  knex('users').where({ access_token }).update({ access_token: '' }).then(data => {
+    result(null, { message: 'signout succeeded' })
   })
 }
 

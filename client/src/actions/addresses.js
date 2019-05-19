@@ -1,22 +1,22 @@
 import request from "utils/request";
 
-export const CREATE_ADDRESS = "CREATE_ADDRESS";
-export const CREATE_ADDRESS_SUCCEEDED = "CREATE_ADDRESS_SUCCEEDED";
+export const ADD_ADDRESS = "ADD_ADDRESS";
+export const ADD_ADDRESS_SUCCEEDED = "ADD_ADDRESS_SUCCEEDED";
 export const UPDATE_ADDRESS = "UPDATE_ADDRESS";
 export const UPDATE_ADDRESS_SUCCEEDED = "UPDATE_ADDRESS_SUCCEEDED";
 export const DELETE_ADDRESS = "DELETE_ADDRESS";
 export const DELETE_ADDRESS_SUCCEEDED = "DELETE_ADDRESS_SUCCEEDED";
 
-export const createAddress = (data, schema) => (dispatch, getState) => {
-  dispatch({ type: CREATE_ADDRESS, schema });
+export const addAddress = (data, schema) => (dispatch, getState) => {
+  dispatch({ type: ADD_ADDRESS, schema });
 
   const url = `/${schema._key}`;
 
   return request
-    .put(url)
+    .post(url)
     .send(data)
     .then(response => {
-      dispatch({ type: CREATE_ADDRESS_SUCCEEDED, schema, response });
+      dispatch({ type: ADD_ADDRESS_SUCCEEDED, schema, response });
     });
 };
 

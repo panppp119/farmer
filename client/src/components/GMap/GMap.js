@@ -4,16 +4,6 @@ import { Icon } from "semantic-ui-react";
 import "./GMap.scss";
 
 class GMap extends React.Component {
-  // static propTypes = {
-  //   center: PropTypes.shape({
-  //     lat: PropTypes.number,
-  //     lng: PropTypes.number
-  //   }),
-  //   zoom: PropTypes.number,
-  //   onCenterChanged: PropTypes.func,
-  //   fixedMarker: PropTypes.bool
-  // }
-
   static defaultProps = {
     zoom: 15,
     fixedMarker: true,

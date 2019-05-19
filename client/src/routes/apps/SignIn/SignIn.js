@@ -5,10 +5,10 @@ import SignInForm from "components/forms/SignInForm";
 
 class SignIn extends React.Component {
   render() {
-    const { signin, loadingAuth, verifyCode, cancelVerification } = this.props;
+    const { signin, loadingAuth } = this.props;
 
     return (
-      <div className='home' style={{ textAlign: "center" }}>
+      <div className='signin' style={{ textAlign: "center" }}>
         <Image
           url={require("assets/logo/logo_title.png")}
           name='logo'
@@ -18,8 +18,6 @@ class SignIn extends React.Component {
         <SignInForm
           signin={signin}
           loading={loadingAuth}
-          verifyCode={verifyCode}
-          cancelVerification={cancelVerification}
         />
       </div>
     );

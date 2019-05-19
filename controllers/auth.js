@@ -1,6 +1,5 @@
 const Auth = require('../models/auth')
 
-// signin
 exports.sign_in = (req, res) => {
   const body = req.body
 
@@ -12,11 +11,21 @@ exports.sign_in = (req, res) => {
   });
 }
 
-// signup
-exports.register = (req, res) => {
+exports.sign_up = (req, res) => {
   const body = req.body
 
   Auth.signup(body, (err, auth) => {
+    if (err)
+      res.send(err);
+
+    res.json(auth);
+  });
+}
+
+exports.sign_out = (req, res) => {
+  const body = req.body
+
+  Auth.signout(body, (err, auth) => {
     if (err)
       res.send(err);
 

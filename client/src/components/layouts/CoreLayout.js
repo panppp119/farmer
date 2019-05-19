@@ -6,22 +6,21 @@ import { Map } from "immutable";
 import MainBar from "components/bars/MainBar";
 import MenuBar from "components/bars/MenuBar";
 import MainView from "components/views/MainView";
-import { checkAuth, signout } from "actions/auth";
+import FlashMessage from 'components/FlashMessage'
+import { signout } from "actions/auth";
 
 class CoreLayout extends React.Component {
   state = {
     menu: false
   };
 
-  componentDidMount() {
-    this.props.checkAuth();
-  }
-
   toggleMenu = bool => {
     this.setState({ menu: bool });
   };
 
   render() {
+    const { flash_message } = this.props
+
     return (
       <div className='corelayout'>
         <MainBar
@@ -37,18 +36,26 @@ class CoreLayout extends React.Component {
 
         <Helmet title='The Farming' />
 
-        <MainView>{this.props.children}</MainView>
+        <MainView>
+          <FlashMessage
+            type={flash_message.get('type')}
+            content={flash_message.get('text')}
+            mount={!flash_message.isEmpty()}
+          />
+
+          {this.props.children}
+        </MainView>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  auth: state.getIn(["auth", "user"], Map())
+  auth: state.getIn(["auth", "user"], Map()),
+  flash_message: state.getIn(["ui", "flash_message"], Map())
 });
 
 const mapDispatchToProps = {
-  checkAuth: () => checkAuth(),
   signout: () => signout()
 };
 

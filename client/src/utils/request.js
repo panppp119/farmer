@@ -12,9 +12,9 @@ agent
   .on("error", error => console.warn(error));
 
 // Create helper method for attaching Access Tokens
-// superagent.Request.prototype.accessToken = function (accessToken) {
-//   return this.set('Authorization', 'Bearer ' + accessToken)
-// }
+superagent.Request.prototype.accessToken = function (accessToken) {
+  return this.set('Authorization', 'Bearer ' + accessToken)
+}
 
 // Create helper method for setting locale
 // superagent.Request.prototype.locale = function (locale) {

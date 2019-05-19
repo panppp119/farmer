@@ -4,6 +4,7 @@ import { connectRouter } from "connected-react-router/immutable";
 const rootReducer = history =>
   combineReducers({
     router: connectRouter(history),
+    ui: require("./ui").default,
     auth: require("./auth").default,
     user: require("./user").default,
     addresses: require("./addresses").default

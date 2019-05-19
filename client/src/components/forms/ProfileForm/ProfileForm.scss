@@ -1,0 +1,20 @@
+.profile-form {
+  @media only screen and (max-width: 767px) {
+    .ui.container {
+      margin: 0 !important;
+    }
+  }
+
+  #save-profile-button {
+    margin-bottom: 16px;
+  }
+
+  #edit-button {
+    background-color: var(--error);
+    color: var(--white);
+
+    &:hover {
+      filter: saturate(80%);
+    }
+  }
+}
