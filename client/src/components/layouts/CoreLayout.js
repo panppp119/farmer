@@ -14,7 +14,7 @@ class CoreLayout extends React.Component {
   static defaultProps = {
     user: Map()
   }
-  
+
   state = {
     menu: false
   };
@@ -37,7 +37,7 @@ class CoreLayout extends React.Component {
         <MainBar
           toggleMenu={this.toggleMenu}
           menu={this.state.menu}
-          auth={this.props.user}
+          auth={this.props.auth}
         />
         <MenuBar
           menu={this.state.menu}
@@ -62,6 +62,7 @@ class CoreLayout extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  auth: state.getIn(["auth", "access_token"], Map()),
   user: state.getIn(["user", "data"], Map()),
   flash_message: state.getIn(["ui", "flash_message"], Map())
 });

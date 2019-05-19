@@ -5,7 +5,7 @@ import ProfileForm from "components/forms/ProfileForm";
 import "./Profile.scss";
 
 class Profile extends React.Component {
-  componentDidMoun () {
+  componentDidMount () {
     this.props.user.isEmpty() && this.props.loadUser()
   }
 

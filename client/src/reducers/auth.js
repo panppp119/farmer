@@ -28,13 +28,11 @@ export default (
     case SIGN_UP_SUCCEEDED:
       return state
         .set("access_token", fromJS(response.body.access_token))
-        .set("currentUser", fromJS(response.body.currentUser))
         .set("loading", false)
 
     case SIGN_OUT_SUCCEEDED:
       return state.set("loading", false)
                   .set("access_token", fromJS({}))
-                  .set("currentUser", fromJS({}))
 
     case CHECK_SESSION:
       return state.set("access_token", fromJS(token));

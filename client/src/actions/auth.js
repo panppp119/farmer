@@ -28,6 +28,7 @@ export const signin = (data, schema) => (dispatch, getState) => {
       else {
         localStorage.setItem("token", response.body.access_token);
         dispatch({ type: SIGN_IN_SUCCEEDED, schema, response });
+        dispatch(fetchUser(userSchema));
         dispatch(push("/"));
         dispatch(addFlashMessage({
           type: 'success',
@@ -75,7 +76,7 @@ export const signout = (schema) => (dispatch, getState) => {
 export const checkSession = (schema) => (dispatch, getState) => {
   let token = localStorage.getItem("token");
 
-  if (token !== null || token !== undefined) {
+  if (token !== null) {
     dispatch({ type: CHECK_SESSION, token });
     dispatch(fetchUser(userSchema));
   }
