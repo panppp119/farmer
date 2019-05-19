@@ -13,8 +13,9 @@ const initialState = ({ user, address }) => ({
   edit: false,
   first_name: user.get('first_name'),
   last_name: user.get('last_name'),
+  phone_number: user.get('phone_number'),
   gender: user.get('gender'),
-  birth_date: user.get('birth_date'),
+  birthday: user.get('birthday'),
   address: {
     name: address.get('name'),
     lat: address.get('lat'),
@@ -45,7 +46,7 @@ class ProfileForm extends React.Component {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       gender: this.state.gender,
-      birth_date: this.state.birth_date,
+      birthday: this.state.birthday,
     }
 
     // const address = {
@@ -72,19 +73,18 @@ class ProfileForm extends React.Component {
   }
 
   render() {
-    const { first_name, last_name, gender, birth_date, address, edit } = this.state;
-    const { loading, user } = this.props;
+    const { first_name, last_name, gender, birthday, phone_number, address, edit } = this.state;
+    const { loading, user, classes } = this.props;
 
     var disabled = true;
-    var phone_number = (!user.isEmpty() && user.get('phone_number').replace('+66', '0')) || ''
 
-    if (first_name !== '' && last_name !== '' && gender !== '' && birth_date !== '') {
+    if (first_name !== '' && last_name !== '' && gender !== '' && birthday !== '') {
       disabled = false
     }
 
     const genderOptions = [
-      { label: 'ชาย', value: 0 },
-      { label: 'หญิง', value: 1 }
+      { label: 'ชาย', value: 1 },
+      { label: 'หญิง', value: 2 }
     ]
 
     return (
@@ -119,11 +119,12 @@ class ProfileForm extends React.Component {
                   fullWidth
                   label='เบอร์โทรศัพท์'
                   margin='normal'
-                  value={phone_number}
+                  value={phone_number || user.get('phone_number')}
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  disabled
+                  disabled={!edit}
+                  onChange={this.handleChange("phone_number")}
                 />
                 <TextField
                   select
@@ -147,11 +148,11 @@ class ProfileForm extends React.Component {
                   fullWidth
                   label="วันเกิด"
                   type="date"
-                  defaultValue={birth_date || user.get('first_name')}
+                  value={birthday || user.get('birthday')}
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  onChange={this.handleChange('birth_date')}
+                  onChange={this.handleChange('birthday')}
                   disabled={!edit}
                 />
               </Grid.Column>

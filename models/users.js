@@ -4,8 +4,8 @@ const User = (user) => {
   this.first_name = user.first_name
   this.last_name = user.last_name
   this.phone_number = user.phone_number
-  this.birth_date = user.birth_date
   this.gender = user.gender
+  this.birthday = user.birthday
   this.active = user.active
   this.created_at = user.created_at || new Date()
   this.updated_at = user.updated_at || new Date()
@@ -49,22 +49,27 @@ User.getUser = (phone_number, result) => {
       let users = data
       let userData = []
 
-      users.forEach(user => {
-        let name = user.name
+      if (users.length !== 0) {
+        users.forEach(user => {
+          let name = user.name
 
-        delete user['role_id']
-        delete user['name']
+          delete user['role_id']
+          delete user['name']
 
-        user = {
-          ...user,
-          roles: [],
-        }
+          user = {
+            ...user,
+            roles: [],
+          }
 
-        user.roles.push(name)
-        userData.push(user)
-      })
+          user.roles.push(name)
+          userData.push(user)
+        })
 
-      result(null, userData[0])
+        result(null, userData[0])
+      }
+      else {
+        result(null, { error: 'ไม่มีข้อมูลในระบบ'})
+      }
     })
 }
 

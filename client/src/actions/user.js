@@ -1,5 +1,7 @@
 import request from "utils/request";
 
+import { signout } from './auth'
+
 export const FETCH_USER = "FETCH_USER";
 export const FETCH_USER_SUCCEEDED = "FETCH_USER_SUCCEEDED";
 export const UPDATE_USER = "UPDATE_USER";
@@ -11,13 +13,18 @@ export const fetchUser = (schema) => (dispatch, getState) => {
   dispatch({ type: FETCH_USER, schema });
 
   const url = `/${schema._key}`;
-  const accessToken = getState().getIn(['auth', 'user', 'access_token']) || ''
+  const accessToken = getState().getIn(['auth', 'access_token']) || ''
 
   return request
     .get(url)
     .accessToken(accessToken)
     .then(response => {
-      dispatch({ type: FETCH_USER_SUCCEEDED, schema, response });
+      if (response.body.error) {
+        dispatch(signout())
+      }
+      else {
+        dispatch({ type: FETCH_USER_SUCCEEDED, schema, response });
+      }
     });
 };
 
@@ -25,7 +32,7 @@ export const updateUser = (data, schema) => (dispatch, getState) => {
   dispatch({ type: UPDATE_USER, schema });
 
   const url = `/${schema._key}/update`;
-  const accessToken = getState().getIn(['auth', 'user', 'access_token']) || ''
+  const accessToken = getState().getIn(['auth', 'access_token']) || ''
 
   return request
     .put(url)
@@ -39,7 +46,7 @@ export const updateUser = (data, schema) => (dispatch, getState) => {
 export const deleteUser = (schema) => (dispatch, getState) => {
   dispatch({ type: DELETE_USER, schema });
 
-  const accessToken = getState().getIn(['auth', 'user', 'access_token']) || ''
+  const accessToken = getState().getIn(['auth', 'access_token']) || ''
 
   const url = `/${schema._key}/delete`;
 

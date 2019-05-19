@@ -7,12 +7,23 @@ import MainBar from "components/bars/MainBar";
 import MenuBar from "components/bars/MenuBar";
 import MainView from "components/views/MainView";
 import FlashMessage from 'components/FlashMessage'
-import { signout } from "actions/auth";
+
+import { signout, checkSession } from "actions/auth";
 
 class CoreLayout extends React.Component {
+  static defaultProps = {
+    user: Map()
+  }
+  
   state = {
     menu: false
   };
+
+  componentDidMount  () {
+    if (this.props.user.isEmpty()) {
+      this.props.checkSession()
+    }
+  }
 
   toggleMenu = bool => {
     this.setState({ menu: bool });
@@ -26,7 +37,7 @@ class CoreLayout extends React.Component {
         <MainBar
           toggleMenu={this.toggleMenu}
           menu={this.state.menu}
-          auth={this.props.auth}
+          auth={this.props.user}
         />
         <MenuBar
           menu={this.state.menu}
@@ -51,12 +62,13 @@ class CoreLayout extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.getIn(["auth", "user"], Map()),
+  user: state.getIn(["user", "data"], Map()),
   flash_message: state.getIn(["ui", "flash_message"], Map())
 });
 
 const mapDispatchToProps = {
-  signout: () => signout()
+  signout: () => signout(),
+  checkSession: () => checkSession()
 };
 
 export default connect(

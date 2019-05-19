@@ -11,3 +11,12 @@ span {
   line-height: auto;
   font-family: "Sarabun", sans-serif;
 }
+
+a {
+  color: var(--primary);
+
+  &:hover {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+}

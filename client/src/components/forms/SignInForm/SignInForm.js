@@ -67,7 +67,7 @@ class SignInForm extends React.Component {
             id='signin-button'
             variant='contained'
             color='primary'
-            style={{ marginTop: 16 }}
+            style={{ marginTop: 16, marginBottom: 16 }}
             disabled={disabled || loading}
             onClick={this.signin}
           >

@@ -9,6 +9,8 @@ import {
   DELETE_USER_SUCCEEDED
 } from "actions/user";
 
+import { SIGN_IN_SUCCEEDED } from 'actions/auth'
+
 const initialState = fromJS({});
 
 export default (
@@ -27,6 +29,10 @@ export default (
 
     case DELETE_USER_SUCCEEDED:
       return state.set("data", fromJS({})).set("loading", false);
+
+    case SIGN_IN_SUCCEEDED:
+      return state.set("data", fromJS(response.body.currentUser))
+                  .set("loading", false);
 
     default:
       return state;

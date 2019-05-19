@@ -21,7 +21,7 @@ Auth.signin = (body, result) => {
     let user = data
 
     if (user.length !== 0) {
-      let token_payload = { password: user[0].password };
+      let token_payload = { phone_number, password };
       let token = jwt.sign(token_payload, "t-herb_farmer", { expiresIn: '24h' });
       let response = {
         access_token: token
@@ -39,7 +39,7 @@ Auth.signin = (body, result) => {
           let id = user[0].id
 
           knex('users').where({ phone_number }).then(userData => {
-            result(null, { ...response, currentUser: userData[0] })
+            result(null, response)
           })
         })
     }
@@ -55,19 +55,48 @@ Auth.signup = (body, result) => {
     created_at: new Date(),
     updated_at: new Date()
   }
-  knex('users').insert(new_user).then(data => {
-    let id = user[0].id
 
-    knex('users').where({ id }).then(userData => {
-      result({ ...response, currentUser: userData[0] })
+  delete new_user['password']
+
+  knex('users').insert(new_user).then(data => {
+    let id = data[0]
+
+    let token_payload = {
+      phone_number: body.phone_number,
+      password: body.password
+    };
+    let token = jwt.sign(token_payload, "t-herb_farmer", { expiresIn: '24h' });
+    let response = {
+      access_token: token
+    }
+
+    let auth = {
+      phone_number: body.phone_number,
+      password: body.password,
+      user_id: id,
+      access_token: token,
+      created_at: new Date(),
+      updated_at: new Date()
+    }
+
+    let user_role = {
+      user_id: id,
+      created_at: new Date(),
+      updated_at: new Date()
+    }
+
+    knex('auth').insert(auth).then(authData => {
+      knex('user_roles').insert(user_role).then(roleData => {})
+
+      knex('users').where({ id }).then(userData => {
+        result(null, response)
+      })
     })
   })
 }
 
-Auth.signout = (body, result) => {
-  let access_token = body.access_token
-
-  knex('users').where({ access_token }).update({ access_token: '' }).then(data => {
+Auth.signout = (phone_number, result) => {
+  knex('auth').where({ phone_number }).update({ access_token: '' }).then(data => {
     result(null, { message: 'signout succeeded' })
   })
 }

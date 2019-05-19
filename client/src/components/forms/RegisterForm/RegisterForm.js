@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import { withTheme } from "@material-ui/core/styles";
+import { MenuItem } from "@material-ui/core";
 import { TextField, Button } from "@material-ui/core";
 
 const initialState = {
@@ -53,6 +54,11 @@ class RegisterForm extends React.Component {
       disabled = true
     }
 
+    const genderOptions = [
+      { label: 'ชาย', value: 1 },
+      { label: 'หญิง', value: 2 }
+    ]
+
     return (
       <div
         className='registre-form'
@@ -86,6 +92,7 @@ class RegisterForm extends React.Component {
           <TextField
             fullWidth
             label='รหัสผ่าน'
+            type='password'
             margin='normal'
             value={password || ""}
             onChange={this.handleChange("password")}
@@ -93,23 +100,35 @@ class RegisterForm extends React.Component {
           <TextField
             fullWidth
             label='ยืนยันรหัสผ่าน'
+            type='password'
             margin='normal'
             value={confirm_password || ""}
             onChange={this.handleChange("confirm_password")}
           />
           <TextField
             fullWidth
-            label='เพศ'
-            margin='normal'
-            value={gender || ""}
-            onChange={this.handleChange("gender")}
-          />
+            select
+            label="เพศ"
+            value={gender}
+            onChange={this.handleChange('gender')}
+            margin="normal"
+          >
+            {genderOptions.map((option, i) => (
+              <MenuItem key={i} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
             fullWidth
-            label='วันเกิด'
-            margin='normal'
-            value={birthday || ""}
-            onChange={this.handleChange("birthday")}
+            label="วันเกิด"
+            type="date"
+            value={birthday}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={this.handleChange('birthday')}
+            style={{ marginTop: 16, marginBottom: 8 }}
           />
 
           <Button
@@ -117,7 +136,7 @@ class RegisterForm extends React.Component {
             id='signin-button'
             variant='contained'
             color='primary'
-            style={{ marginTop: 16 }}
+            style={{ marginTop: 16, marginBottom: 16 }}
             disabled={disabled || loading}
             onClick={this.register}
           >
