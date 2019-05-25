@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Map } from "immutable";
 import { withTheme } from "@material-ui/core/styles";
 import { MenuItem } from "@material-ui/core";
@@ -50,6 +50,12 @@ class WalletForm extends React.Component {
     e.preventDefault();
 
     this.setState({ edit: true });
+  };
+
+  cancel = e => {
+    e.preventDefault();
+
+    this.setState({ edit: false });
   };
 
   withdraw = e => {
@@ -139,16 +145,27 @@ class WalletForm extends React.Component {
 
               <Grid.Column computer={8} mobile={16}>
                 {wallet.isEmpty() || edit ? (
-                  <Button
-                    fullWidth
-                    id='save-wallet-button'
-                    variant='contained'
-                    color='primary'
-                    disabled={disabled || loading}
-                    onClick={this.update}
-                  >
-                    บันทึก
-                  </Button>
+                  <Fragment>
+                    <Button
+                      fullWidth
+                      id='save-wallet-button'
+                      variant='contained'
+                      color='primary'
+                      disabled={disabled || loading}
+                      onClick={this.update}
+                    >
+                      บันทึก
+                    </Button>
+
+                    <Button
+                      fullWidth
+                      id='edit-button'
+                      variant='contained'
+                      onClick={this.cancel}
+                    >
+                      ยกเลิก
+                    </Button>
+                  </Fragment>
                 ) : (
                   <Button
                     fullWidth
@@ -165,7 +182,7 @@ class WalletForm extends React.Component {
                   fullWidth
                   color='primary'
                   variant='contained'
-                  style={{ marginTop: 16 }}
+                  style={{ marginTop: 16, display: edit && "none" }}
                   onClick={this.withdraw}
                 >
                   ถอนเงิน

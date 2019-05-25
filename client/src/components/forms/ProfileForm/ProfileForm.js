@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Map } from "immutable";
 import { withTheme } from "@material-ui/core/styles";
 import { MenuItem } from "@material-ui/core";
@@ -70,6 +70,12 @@ class ProfileForm extends React.Component {
     e.preventDefault();
 
     this.setState({ edit: true });
+  };
+
+  cancel = e => {
+    e.preventDefault();
+
+    this.setState({ edit: false });
   };
 
   render() {
@@ -169,36 +175,46 @@ class ProfileForm extends React.Component {
                   onChange={this.handleChange("birthday")}
                   disabled={!edit}
                 />
+
+                <GMap place drag />
               </Grid.Column>
 
               <Grid.Column computer={8} mobile={16}>
-                <GMap place drag />
+                {edit ? (
+                  <Fragment>
+                    <Button
+                      fullWidth
+                      id='save-profile-button'
+                      variant='contained'
+                      color='primary'
+                      disabled={disabled || loading}
+                      onClick={this.update}
+                    >
+                      บันทึก
+                    </Button>
+
+                    <Button
+                      fullWidth
+                      id='edit-button'
+                      variant='contained'
+                      onClick={this.cancel}
+                    >
+                      ยกเลิก
+                    </Button>
+                  </Fragment>
+                ) : (
+                  <Button
+                    fullWidth
+                    id='edit-button'
+                    variant='contained'
+                    style={{ marginTop: 16 }}
+                    onClick={this.edit}
+                  >
+                    แก้ไข
+                  </Button>
+                )}
               </Grid.Column>
             </Grid>
-
-            {edit ? (
-              <Button
-                fullWidth
-                id='save-profile-button'
-                variant='contained'
-                color='primary'
-                style={{ marginTop: 16 }}
-                disabled={disabled || loading}
-                onClick={this.update}
-              >
-                บันทึก
-              </Button>
-            ) : (
-              <Button
-                fullWidth
-                id='edit-button'
-                variant='contained'
-                style={{ marginTop: 16 }}
-                onClick={this.edit}
-              >
-                แก้ไข
-              </Button>
-            )}
           </form>
         </Container>
       </div>
