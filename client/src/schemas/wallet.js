@@ -1,9 +1,5 @@
 import { schema } from "normalizr";
 
-import userSchema from "schemas/user";
-
-const walletSchema = new schema.Entity("wallet", {
-  owner: userSchema
-});
+const walletSchema = new schema.Entity("wallet", {});
 
 export default walletSchema;

@@ -1,37 +1,37 @@
 import React from "react";
-import { Map } from 'immutable'
+import { Map } from "immutable";
 import { withTheme } from "@material-ui/core/styles";
 import { MenuItem } from "@material-ui/core";
-import { Grid, Container } from 'semantic-ui-react'
+import { Grid, Container } from "semantic-ui-react";
 import { TextField, Button } from "@material-ui/core";
 
-import GMap from 'components/GMap'
+import GMap from "components/GMap";
 
-import './ProfileForm.scss'
+import "./ProfileForm.scss";
 
 const initialState = ({ user, address }) => ({
   edit: false,
-  first_name: user.get('first_name'),
-  last_name: user.get('last_name'),
-  phone_number: user.get('phone_number'),
-  gender: user.get('gender'),
-  birthday: user.get('birthday'),
+  first_name: user.get("first_name"),
+  last_name: user.get("last_name"),
+  phone_number: user.get("phone_number"),
+  gender: user.get("gender"),
+  birthday: user.get("birthday"),
   address: {
-    name: address.get('name'),
-    lat: address.get('lat'),
-    lng: address.get('lng'),
-    number: address.get('number'),
-    district: address.get('district'),
-    sub_district: address.get('sub_district'),
-    province: address.get('province'),
-    zip_code: address.get('zip_code')
+    name: address.get("name"),
+    lat: address.get("lat"),
+    lng: address.get("lng"),
+    number: address.get("number"),
+    district: address.get("district"),
+    sub_district: address.get("sub_district"),
+    province: address.get("province"),
+    zip_code: address.get("zip_code")
   }
-})
+});
 
 class ProfileForm extends React.Component {
   static defaultProps = {
     user: Map()
-  }
+  };
 
   state = initialState;
 
@@ -46,8 +46,8 @@ class ProfileForm extends React.Component {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       gender: this.state.gender,
-      birthday: this.state.birthday,
-    }
+      birthday: this.state.birthday
+    };
 
     // const address = {
     //   name: this.state.address.name,
@@ -60,32 +60,45 @@ class ProfileForm extends React.Component {
     //   zip_code: this.state.address.zip_code
     // }
 
-    this.props.updateUser(user)
+    this.props.updateUser(user);
     // this.props.updateAddress(address)
 
-    this.setState({ edit: false })
+    this.setState({ edit: false });
   };
 
   edit = e => {
-    e.preventDefault()
+    e.preventDefault();
 
-    this.setState({ edit: true })
-  }
+    this.setState({ edit: true });
+  };
 
   render() {
-    const { first_name, last_name, gender, birthday, phone_number, address, edit } = this.state;
-    const { loading, user, classes } = this.props;
+    const {
+      first_name,
+      last_name,
+      gender,
+      birthday,
+      phone_number,
+      address,
+      edit
+    } = this.state;
+    const { loading, user } = this.props;
 
     var disabled = true;
 
-    if (first_name !== '' && last_name !== '' && gender !== '' && birthday !== '') {
-      disabled = false
+    if (
+      first_name !== "" &&
+      last_name !== "" &&
+      gender !== "" &&
+      birthday !== ""
+    ) {
+      disabled = false;
     }
 
     const genderOptions = [
-      { label: 'ชาย', value: 1 },
-      { label: 'หญิง', value: 2 }
-    ]
+      { label: "ชาย", value: 1 },
+      { label: "หญิง", value: 2 }
+    ];
 
     return (
       <div className='profile-form'>
@@ -97,9 +110,9 @@ class ProfileForm extends React.Component {
                   fullWidth
                   label='ชื่อ'
                   margin='normal'
-                  value={first_name || user.get('first_name')}
+                  value={first_name || user.get("first_name")}
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   onChange={this.handleChange("first_name")}
                   disabled={!edit}
@@ -108,9 +121,9 @@ class ProfileForm extends React.Component {
                   fullWidth
                   label='นามสกุล'
                   margin='normal'
-                  value={last_name || user.get('last_name')}
+                  value={last_name || user.get("last_name")}
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   onChange={this.handleChange("last_name")}
                   disabled={!edit}
@@ -119,9 +132,9 @@ class ProfileForm extends React.Component {
                   fullWidth
                   label='เบอร์โทรศัพท์'
                   margin='normal'
-                  value={phone_number || user.get('phone_number')}
+                  value={phone_number || user.get("phone_number")}
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
                   disabled={!edit}
                   onChange={this.handleChange("phone_number")}
@@ -129,14 +142,14 @@ class ProfileForm extends React.Component {
                 <TextField
                   select
                   fullWidth
-                  label="เพศ"
-                  value={gender || user.get('gender')}
+                  label='เพศ'
+                  value={gender || user.get("gender")}
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
-                  onChange={this.handleChange('gender')}
+                  onChange={this.handleChange("gender")}
                   disabled={!edit}
-                  margin="normal"
+                  margin='normal'
                 >
                   {genderOptions.map(option => (
                     <MenuItem key={option.value} value={option.value}>
@@ -144,21 +157,22 @@ class ProfileForm extends React.Component {
                     </MenuItem>
                   ))}
                 </TextField>
-                <TextField style={{ marginTop: 16, marginBottom: 8 }}
+                <TextField
+                  style={{ marginTop: 16, marginBottom: 8 }}
                   fullWidth
-                  label="วันเกิด"
-                  type="date"
-                  value={birthday || user.get('birthday')}
+                  label='วันเกิด'
+                  type='date'
+                  value={birthday || user.get("birthday")}
                   InputLabelProps={{
-                    shrink: true,
+                    shrink: true
                   }}
-                  onChange={this.handleChange('birthday')}
+                  onChange={this.handleChange("birthday")}
                   disabled={!edit}
                 />
               </Grid.Column>
 
               <Grid.Column computer={8} mobile={16}>
-                <GMap place={edit} drag={edit} />
+                <GMap place drag />
               </Grid.Column>
             </Grid>
 

@@ -35,7 +35,7 @@ User.getUsers = (result) => {
         userData.push(user)
       })
 
-      result(userData)
+      result(null, userData)
     })
 }
 

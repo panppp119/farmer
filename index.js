@@ -19,7 +19,11 @@ app.options('*', cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use('/', require('./routes'))
+app.use('/api', require('./routes'))
+
+app.get('/*', (req, res) => {
+ res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+})
 
 app.listen(port, () =>
   console.log(`Listening on http port ${port}!`)

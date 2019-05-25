@@ -16,6 +16,7 @@ const Home = lazy(() => import("./routes/apps/Home"));
 const SignIn = lazy(() => import("./routes/apps/SignIn"));
 const Register = lazy(() => import("./routes/apps/Register"));
 const Profile = lazy(() => import("./routes/apps/Profile"));
+const Wallet = lazy(() => import("./routes/apps/Wallet"));
 
 function PrivateRoute({ component: Component, ...rest }) {
   return (
@@ -50,7 +51,7 @@ const App = () => {
 
                 <PrivateRoute exact path='/' component={Home} />
                 <PrivateRoute exact path='/profile' component={Profile} />
-                <PrivateRoute exact path='/profile' component={Profile} />
+                <PrivateRoute exact path='/wallet' component={Wallet} />
               </Switch>
             </Suspense>
           </CoreLayout>

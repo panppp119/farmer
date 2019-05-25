@@ -5,7 +5,7 @@ import { List, Header } from "semantic-ui-react";
 import {
   AccountCircle,
   Home,
-  // AccountBalanceWallet,
+  AccountBalanceWallet,
   PowerSettingsNew
 } from "@material-ui/icons";
 
@@ -44,14 +44,14 @@ class MenuBar extends React.Component {
               <Header as='h4'>ข้อมูลส่วนตัว</Header>
             </List.Item>
 
-            {/* <List.Item
+            <List.Item
               as={Link}
               to='/wallet'
               onClick={() => this.props.toggleMenu(false)}
             >
               <AccountBalanceWallet />
               <Header as='h4'>กระเป๋าเงิน</Header>
-            </List.Item> */}
+            </List.Item>
 
             <List.Item as={Link} to='/sign_in' onClick={this.signout}>
               <PowerSettingsNew />

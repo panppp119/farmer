@@ -1,18 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
-import { withTheme } from '@material-ui/core/styles';
-import { TextField, Button } from '@material-ui/core';
+import React from "react";
+import { Link } from "react-router-dom";
+import { withTheme } from "@material-ui/core/styles";
+import { TextField, Button } from "@material-ui/core";
 
 const initialState = {
-  phone_number: '',
-  password: ''
+  phone_number: "",
+  password: ""
 };
 
 class SignInForm extends React.Component {
   state = initialState;
 
   handleChange = name => e => {
-    this.setState({ [name]: e.target.value })
+    this.setState({ [name]: e.target.value });
   };
 
   signin = e => {
@@ -21,9 +21,9 @@ class SignInForm extends React.Component {
     const data = {
       phone_number: this.state.phone_number,
       password: this.state.password
-    }
+    };
 
-    this.props.signin(data)
+    this.props.signin(data);
   };
 
   render() {
@@ -32,17 +32,18 @@ class SignInForm extends React.Component {
 
     var disabled = true;
 
-    if (phone_number !== '' && password !== '') {
+    if (phone_number !== "" && password !== "") {
       disabled = false;
     }
+    console.log(this.state, disabled);
 
     return (
       <div
         className='signin-form'
         style={{
           maxWidth: 400,
-          margin: 'auto',
-          display: verifyCode && 'none'
+          margin: "auto",
+          display: verifyCode && "none"
         }}
       >
         <form autoComplete='off'>
@@ -50,16 +51,16 @@ class SignInForm extends React.Component {
             fullWidth
             label='เบอร์โทรศัพท์'
             margin='normal'
-            value={phone_number || ''}
-            onChange={this.handleChange('phone_number')}
+            value={phone_number || ""}
+            onChange={this.handleChange("phone_number")}
           />
           <TextField
             fullWidth
             type='password'
             label='รหัสผ่าน'
             margin='normal'
-            value={password || ''}
-            onChange={this.handleChange('password')}
+            value={password || ""}
+            onChange={this.handleChange("password")}
           />
 
           <Button

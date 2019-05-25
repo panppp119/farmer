@@ -1,0 +1,10 @@
+.wallet {
+  #add-button {
+    background-color: var(--primary);
+    color: var(--white);
+
+    &:hover {
+      filter: saturate(70%);
+    }
+  }
+}

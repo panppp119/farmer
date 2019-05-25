@@ -7,7 +7,8 @@ const rootReducer = history =>
     ui: require("./ui").default,
     auth: require("./auth").default,
     user: require("./user").default,
-    addresses: require("./addresses").default
+    addresses: require("./addresses").default,
+    wallet: require("./wallet").default
   });
 
 export default rootReducer;
