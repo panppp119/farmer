@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
 var authController = require('../controllers/auth')
 var userController = require('../controllers/users')
 var walletController = require('../controllers/wallet')
+var marketController = require('../controllers/market')
 
 router.route('/sign_in')
   .post(authController.sign_in)
@@ -36,6 +37,14 @@ router.route('/wallet')
   .get(walletController.list)
   .post(walletController.add)
   .put(walletController.update)
+router.route('/wallet/:id')
   .delete(walletController.delete)
+
+router.route('/market')
+  .get(marketController.list)
+  .post(marketController.add)
+  .put(marketController.update)
+router.route('/market/:id')
+  .delete(marketController.delete)
 
 module.exports = router

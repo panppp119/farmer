@@ -17,25 +17,31 @@ User.getUsers = (result) => {
     .leftJoin('user_roles', 'user_roles.user_id', 'users.id')
     .leftJoin('roles', 'roles.id', 'user_roles.role_id')
     .then(data => {
-      let users = data
-      let userData = []
+      let users = []
 
-      users.forEach(user => {
+      data.forEach(user => {
         let name = user.name
 
         delete user['role_id']
         delete user['name']
 
-        user = {
-          ...user,
-          roles: [],
-        }
+        if (users.findIndex(u => u.id === user.id) !== -1) {
+          let i = users.findIndex(u => u.id === user.id)
 
-        user.roles.push(name)
-        userData.push(user)
+          users[i].roles.push(name)
+        }
+        else {
+          user = {
+            ...user,
+            roles: [],
+          }
+
+          user.roles.push(name)
+          users.push(user)
+        }
       })
 
-      result(null, userData)
+      result(null, users)
     })
 }
 
@@ -46,26 +52,32 @@ User.getUser = (phone_number, result) => {
     .leftJoin('roles', 'roles.id', 'user_roles.role_id')
     .where({ 'users.phone_number': phone_number })
     .then(data => {
-      let users = data
-      let userData = []
+      let users = []
 
-      if (users.length !== 0) {
-        users.forEach(user => {
+      if (data.length > 0) {
+        data.forEach(user => {
           let name = user.name
 
           delete user['role_id']
           delete user['name']
 
-          user = {
-            ...user,
-            roles: [],
-          }
+          if (users.findIndex(u => u.id === user.id) !== -1) {
+            let i = users.findIndex(u => u.id === user.id)
 
-          user.roles.push(name)
-          userData.push(user)
+            users[i].roles.push(name)
+          }
+          else {
+            user = {
+              ...user,
+              roles: [],
+            }
+
+            user.roles.push(name)
+            users.push(user)
+          }
         })
 
-        result(null, userData[0])
+        result(null, users[0])
       }
       else {
         result(null, { error: 'ไม่มีข้อมูลในระบบ'})
