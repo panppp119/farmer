@@ -9,14 +9,15 @@ import { Grid } from "semantic-ui-react";
 import "./MarketTable.scss";
 
 class MarketTable extends React.Component {
+  static defaultProps = {
+    user: Map()
+  };
+
   state = {
     index: null,
     name: null,
-    market_attributes: []
-  };
-
-  static defaultProps = {
-    user: Map()
+    market_attributes:
+      (!this.props.market.isEmpty() && this.props.market.toJS()) || []
   };
 
   componentDidMount() {
@@ -25,12 +26,10 @@ class MarketTable extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.market.isEmpty() && prevProps.market !== this.props.market) {
-      console.log(1);
       this.setState({ market_attributes: this.props.market.toJS() });
     }
 
     if (!prevProps.market.isEmpty() && prevProps.market !== this.props.market) {
-      console.log(2);
       this.setState({ market_attributes: this.props.market.toJS() });
     }
   }
@@ -104,8 +103,6 @@ class MarketTable extends React.Component {
 
     const roles = (!user.isEmpty() && user.get("roles")) || List();
     var editable = roles.includes("admin");
-
-    console.log(market_attributes);
 
     return (
       <div className='market-table'>
@@ -190,7 +187,7 @@ class MarketTable extends React.Component {
                 variant='contained'
                 style={{
                   marginTop: 16,
-                  display: market_attributes.length === 0 && "display"
+                  display: index === null && "none"
                 }}
                 onClick={this.save}
               >
