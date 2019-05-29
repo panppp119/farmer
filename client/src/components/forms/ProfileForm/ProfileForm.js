@@ -17,14 +17,9 @@ const initialState = ({ user, address }) => ({
   gender: user.get("gender"),
   birthday: user.get("birthday"),
   address: {
-    name: address.get("name"),
     lat: address.get("lat"),
     lng: address.get("lng"),
-    number: address.get("number"),
-    district: address.get("district"),
-    sub_district: address.get("sub_district"),
-    province: address.get("province"),
-    zip_code: address.get("zip_code")
+    name: address.get("name")
   }
 });
 
@@ -35,6 +30,15 @@ class ProfileForm extends React.Component {
 
   state = initialState;
 
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.address.isEmpty() &&
+      prevProps.address !== this.props.address
+    ) {
+      this.setState({ address: this.props.address });
+    }
+  }
+
   handleChange = name => e => {
     this.setState({ [name]: e.target.value });
   };
@@ -42,28 +46,34 @@ class ProfileForm extends React.Component {
   update = e => {
     e.preventDefault();
 
-    const user = {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      gender: this.state.gender,
-      birthday: this.state.birthday
+    const { user, address } = this.props;
+
+    const usr = {
+      first_name: this.state.first_name || user.get("first_name"),
+      last_name: this.state.last_name || user.get("last_name"),
+      gender: this.state.gender || user.get("gender"),
+      birthday: this.state.birthday || user.get("birthday")
     };
 
-    // const address = {
-    //   name: this.state.address.name,
-    //   lat: this.state.address.name,
-    //   lng: this.state.address.name,
-    //   number: this.state.address.number,
-    //   district: this.state.address.district,
-    //   sub_district: this.state.address.sub_district,
-    //   province: this.state.address.province,
-    //   zip_code: this.state.address.zip_code
-    // }
+    const addrs = {
+      lat: this.state.address.lat || address.get("lat"),
+      lng: this.state.address.lng || address.get("lng"),
+      name: this.state.address.name || address.get("name") || "",
+      user_id: user.get("id")
+    };
 
-    this.props.updateUser(user);
-    // this.props.updateAddress(address)
+    if (address.isEmpty()) {
+      this.props.addAddress(addrs);
+    } else {
+      this.props.updateAddress(addrs);
+    }
 
+    this.props.updateUser(usr);
     this.setState({ edit: false });
+  };
+
+  onPlaceChange = address => {
+    this.setState({ address });
   };
 
   edit = e => {
@@ -85,10 +95,9 @@ class ProfileForm extends React.Component {
       gender,
       birthday,
       phone_number,
-      address,
       edit
     } = this.state;
-    const { loading, user } = this.props;
+    const { loading, user, address } = this.props;
 
     var disabled = true;
 
@@ -176,7 +185,22 @@ class ProfileForm extends React.Component {
                   disabled={!edit}
                 />
 
-                <GMap place drag />
+                {!address.isEmpty() && (
+                  <div
+                    style={{
+                      marginTop: 16,
+                      pointerEvents: !edit && "none",
+                      filter: !edit && "opacity(50%)"
+                    }}
+                  >
+                    <GMap
+                      place
+                      drag
+                      address={this.props.address.toJS()}
+                      onPlaceChange={this.onPlaceChange}
+                    />
+                  </div>
+                )}
               </Grid.Column>
 
               <Grid.Column computer={8} mobile={16}>

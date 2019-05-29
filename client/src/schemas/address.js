@@ -1,6 +1,6 @@
 import { schema } from "normalizr";
 
-const addressSchema = new schema.Entity("addresses");
+const addressSchema = new schema.Entity("address");
 
 addressSchema.define({});
 

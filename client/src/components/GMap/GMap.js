@@ -11,7 +11,8 @@ class GMap extends React.Component {
     center: {
       lat: 13.7563,
       lng: 100.5018
-    }
+    },
+    address: {}
   };
 
   componentDidMount() {
@@ -31,25 +32,15 @@ class GMap extends React.Component {
     );
   }
 
-  componentDidUpdate(prevProps) {
-    const { center } = this.props;
-
-    this.map &&
-      this.map.setCenter({
-        lat: center.lat,
-        lng: center.lng
-      });
-  }
-
   renderGoogleMap() {
-    const { center, drag, onCenterChanged } = this.props;
+    const { center, drag, onPlaceChange, address } = this.props;
 
     const geocoder = new window.google.maps.Geocoder();
 
     const map = new window.google.maps.Map(this.refs.map, {
       center: {
-        lat: center.lat,
-        lng: center.lng
+        lat: address.lat || center.lat,
+        lng: address.lng || center.lng
       },
       zoom: 15,
       mapTypeControl: false,
@@ -65,6 +56,13 @@ class GMap extends React.Component {
 
     let autocomplete = new window.google.maps.places.Autocomplete(
       this.refs.input
+    );
+
+    map.addListener("dragend", () =>
+      onPlaceChange({
+        lat: this.map.center.lat(),
+        lng: this.map.center.lng()
+      })
     );
 
     autocomplete.bindTo("bounds", map);
@@ -84,11 +82,11 @@ class GMap extends React.Component {
         map.setCenter(location);
       }
 
-      onCenterChanged &&
-        onCenterChanged({
-          location_lat: location.lat(),
-          location_lng: location.lng(),
-          location_name: place.name
+      onPlaceChange &&
+        onPlaceChange({
+          lat: location.lat(),
+          lng: location.lng(),
+          name: place.name || ""
         });
     });
 
@@ -104,6 +102,8 @@ class GMap extends React.Component {
   }
 
   render() {
+    const { place, address } = this.props;
+
     return (
       <div className='google-map-container'>
         <div className='google-map' ref='map' />
@@ -116,13 +116,14 @@ class GMap extends React.Component {
           />
         )}
 
-        {this.props.place && (
+        {place && (
           <div className='google-map-places-container' ref='inputContainer'>
             <input
               className='google-map-places-input'
               type='text'
               placeholder='Search...'
               ref='input'
+              defaultValue={address.name}
               onKeyPress={this.preventSubmitOnEnter}
               onKeyDown={this.preventSubmitOnEnter}
             />

@@ -1,7 +1,7 @@
 const Address = require('../models/addresses')
+const middleware = require('../utils/middleware')
 
-// get all addresses
-exports.list = (req, res) => {
+exports.list = (req, res, next) => {
   Address.getAddresses((err, addresses) => {
     if (err)
       res.send(err);
@@ -10,11 +10,13 @@ exports.list = (req, res) => {
   });
 }
 
-// create new address
-exports.new = (req, res) => {
+exports.new = (req, res, next) => {
+  middleware.checkToken(req, res, next)
+
+  let phone_number = req.decoded.phone_number
   const body = req.body
 
-  Address.createAddress(body, (err, address) => {
+  Address.addAddress(phone_number, body, (err, address) => {
     if (err)
       res.send(err);
 
@@ -22,23 +24,25 @@ exports.new = (req, res) => {
   })
 }
 
-// get address by id
-exports.view = (req, res) => {
-  const id = req.params.address_id
+exports.view = (req, res, next) => {
+  middleware.checkToken(req, res, next)
 
-  Address.getAddress(id, (err, address) => {
+  let phone_number = req.decoded.phone_number
+
+  Address.getAddress(phone_number, (err, address) => {
     if (err)
       res.send(err);
     res.json(address);
   });
 }
 
-// update address
-exports.update = (req, res) => {
-  const id = req.params.address_id
+exports.update = (req, res, next) => {
+  middleware.checkToken(req, res, next)
+
+  let phone_number = req.decoded.phone_number
   const body = req.body
 
-  Address.updateAddress(id, body, (err, address) => {
+  Address.updateAddress(phone_number, body, (err, address) => {
     if (err)
       res.send(err);
     res.json(address);
@@ -46,10 +50,13 @@ exports.update = (req, res) => {
 }
 
 // delete address
-exports.delete = (req, res) => {
+exports.delete = (req, res, next) => {
+  middleware.checkToken(req, res, next)
+
+  let phone_number = req.decoded.phone_number
   const id = req.params.address_id
 
-  Address.deleteAddress(id, (err, address) => {
+  Address.deleteAddress(phone_number, id, (err, address) => {
     if (err)
       res.send(err)
 

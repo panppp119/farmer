@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
 
 var authController = require('../controllers/auth')
 var userController = require('../controllers/users')
+var addressController = require('../controllers/addresses')
 var walletController = require('../controllers/wallet')
 var marketController = require('../controllers/market')
 
@@ -32,6 +33,15 @@ router.route('/user/update')
   .put(userController.update)
 router.route('/user/delete')
   .delete(userController.delete)
+
+router.route('/address')
+  .get(addressController.view)
+  .post(addressController.new)
+  .put(addressController.update)
+router.route('/addresses')
+  .get(addressController.list)
+router.route('/addresses/:id')
+  .delete(addressController.delete)
 
 router.route('/wallet')
   .get(walletController.list)

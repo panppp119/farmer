@@ -75,12 +75,14 @@ class MarketTable extends React.Component {
 
     const market = this.state.market_attributes;
 
-    if (market[i].id) {
-      this.props.delete(market[i].id);
-    }
+    if (window.confirm("ยืนยันที่จะลบใช่หรือไม่?")) {
+      if (market[i].id) {
+        this.props.delete(market[i].id);
+      }
 
-    market.splice(i, 1);
-    this.setState({ market_attributes: market });
+      market.splice(i, 1);
+      this.setState({ market_attributes: market });
+    }
   };
 
   handleChange = (name, i) => e => {
