@@ -59,7 +59,7 @@ class DoneForm extends React.Component {
 
     return (
       <div className='done-form'>
-        <Grid columns={2}>
+        <Grid columns={2} stackable>
           <Grid.Column>
             <Grid columns={2}>
               <Grid.Column>

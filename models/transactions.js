@@ -38,8 +38,26 @@ Transaction.addTransaction = (phone_number, body, result)=> {
       }).then(data => {
         prev_amount = data[0].amount || 0
 
+        let amount = prev_amount
+
+        switch (body.status) {
+          case 'รอการยืนยัน':
+            amount = prev_amount
+            break
+          case 'เสร็จสิ้น':
+            if (body.type === 'ถอนเงิน') {
+              amount = prev_amount - body.amount
+            }
+            else {
+              amount = prev_amount + body.amount
+            }
+            break;
+          default: break;
+        }
+
         knex('wallet').update({
-          amount: prev_amount + body.amount
+          amount: amount,
+          status: 0
         }).where({
           id: body.wallet_id
         }).then(() => {

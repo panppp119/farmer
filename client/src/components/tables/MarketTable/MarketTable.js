@@ -113,7 +113,7 @@ class MarketTable extends React.Component {
             return (
               <Grid.Row style={{ padding: 0 }} key={i}>
                 <Grid.Column
-                  width={editable ? 9 : 10}
+                  width={editable ? 7 : 8}
                   textAlign='left'
                   verticalAlign='middle'
                 >
@@ -136,7 +136,7 @@ class MarketTable extends React.Component {
                 </Grid.Column>
 
                 <Grid.Column
-                  width={editable ? 5 : 6}
+                  width={editable ? 7 : 8}
                   textAlign='right'
                   verticalAlign='middle'
                 >

@@ -1,6 +1,5 @@
 import React from "react";
 import Numeral from "numeral";
-import S from "string";
 import Moment from "moment";
 import { withTheme } from "@material-ui/core/styles";
 import { Grid, Label } from "semantic-ui-react";
@@ -38,15 +37,21 @@ class TransactionsTable extends React.Component {
                     textAlign='right'
                     verticalAlign='middle'
                   >
-                    THB {Numeral(item.get("amount")).format("0,0.00")}
+                    <p
+                      className={
+                        item.get("type") === "เงินเข้า" ? "primary" : "error"
+                      }
+                    >
+                      THB {Numeral(item.get("amount")).format("0,0.00")}
+                    </p>
                   </Grid.Column>
 
                   <Grid.Column
                     width={5}
-                    textAlign='center'
+                    textAlign='right'
                     verticalAlign='middle'
                   >
-                    <Label>{S(item.get("status")).humanize().s}</Label>
+                    <Label>{item.get("status")}</Label>
                   </Grid.Column>
                 </Grid.Row>
               );

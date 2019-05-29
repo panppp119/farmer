@@ -1,5 +1,23 @@
 .transactions-table {
+  height: 100%;
+  max-height: 200px;
+  overflow: auto;
+
+  @media screen and (max-width: 768px) {
+    max-height: 300px;
+  }
+
   .ui.grid > .row {
     padding: 0;
+  }
+
+  p {
+    &.primary {
+      color: var(--primary);
+    }
+
+    &.error {
+      color: var(--error);
+    }
   }
 }
