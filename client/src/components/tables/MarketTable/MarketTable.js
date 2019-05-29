@@ -154,7 +154,7 @@ class MarketTable extends React.Component {
                     />
                   ) : (
                     <p onDoubleClick={this.handleDblClick("amount", i)}>
-                      THB {Numeral(item.amount).format("0,0.00")}
+                      THB {Numeral(item.amount).format("0,0.00")} / กิโลกรัม
                     </p>
                   )}
                 </Grid.Column>

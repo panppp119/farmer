@@ -4,6 +4,7 @@ const Wallet = (wallet) => {
   this.account_name = wallet.account_name
   this.account_number = wallet.account_number
   this.bank_name = wallet.bank_name
+  this.amount = wallet.amount
   this.user_id = wallet.user_id
   this.active = wallet.active
   this.created_at = wallet.created_at || new Date()

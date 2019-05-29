@@ -1,0 +1,9 @@
+.done-form {
+  width: 100%;
+
+  @media only screen and (max-width: 767px) {
+    .ui.container {
+      margin: 0 !important;
+    }
+  }
+}

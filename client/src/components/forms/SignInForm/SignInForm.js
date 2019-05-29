@@ -16,8 +16,6 @@ class SignInForm extends React.Component {
   };
 
   signin = e => {
-    e.preventDefault();
-
     const data = {
       phone_number: this.state.phone_number,
       password: this.state.password

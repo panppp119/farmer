@@ -12,10 +12,11 @@ const User = (user) => {
 }
 
 User.getUsers = (result) => {
-  knex.select('users.*', 'user_roles.role_id', 'roles.name')
+  knex.select('users.*', 'user_roles.role_id', 'roles.name', 'wallet.id as wallet_id')
     .from('users')
     .leftJoin('user_roles', 'user_roles.user_id', 'users.id')
     .leftJoin('roles', 'roles.id', 'user_roles.role_id')
+    .leftJoin('wallet', 'wallet.user_id', 'users.id')
     .then(data => {
       let users = []
 
@@ -37,8 +38,9 @@ User.getUsers = (result) => {
           }
 
           user.roles.push(name)
-          users.push(user)
         }
+
+        users.push(user)
       })
 
       result(null, users)
@@ -46,10 +48,11 @@ User.getUsers = (result) => {
 }
 
 User.getUser = (phone_number, result) => {
-  knex.select('users.*', 'user_roles.role_id', 'roles.name')
+  knex.select('users.*', 'user_roles.role_id', 'roles.name', 'wallet.id as wallet_id')
     .from('users')
     .leftJoin('user_roles', 'user_roles.user_id', 'users.id')
     .leftJoin('roles', 'roles.id', 'user_roles.role_id')
+    .leftJoin('wallet', 'wallet.user_id', 'users.id')
     .where({ 'users.phone_number': phone_number })
     .then(data => {
       let users = []

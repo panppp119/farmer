@@ -1,17 +1,17 @@
 const jwt = require('jsonwebtoken');
 const middleware = require('../utils/middleware')
-const Wallet = require('../models/wallet.js')
+const Product = require('../models/products.js')
 
 exports.list = (req, res, next) => {
   middleware.checkToken(req, res, next)
 
   let phone_number = req.decoded.phone_number || {}
 
-  Wallet.getWallet(phone_number, (err, wallet) => {
+  Product.getProducts(phone_number, (err, products) => {
     if (err)
       res.send(err);
 
-    res.json(wallet)
+    res.json(products)
   });
 }
 
@@ -20,35 +20,38 @@ exports.new = (req, res, next) => {
   let phone_number = req.decoded.phone_number
   let body = req.body
 
-  Wallet.addWallet(phone_number, body, (err, wallet) => {
+  Product.addProduct(phone_number, body, (err, product) => {
     if (err)
       res.send(err);
 
-    res.json(wallet);
+    res.json(product);
   });
 }
 
 exports.update = (req, res, next) => {
   middleware.checkToken(req, res, next)
   let phone_number = req.decoded.phone_number
+  let id = req.params.id
   let body = req.body
 
-  Wallet.updateWallet(phone_number, body, (err, wallet) => {
+  Product.updateProduct(phone_number, id, body, (err, product) => {
     if (err)
       res.send(err);
 
-    res.json(wallet);
+    res.json(product);
   });
 }
 
 exports.delete = (req, res, next) => {
   middleware.checkToken(req, res, next)
+
+  let phone_number = req.decoded.phone_number
   let id = req.params.id
 
-  Wallet.deleteWallet(id, (err, wallet) => {
+  Product.deleteProduct(phone_number, id, (err, product) => {
     if (err)
       res.send(err);
 
-    res.json(wallet);
+    res.json(product);
   });
 }

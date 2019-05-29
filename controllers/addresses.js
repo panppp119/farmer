@@ -2,7 +2,11 @@ const Address = require('../models/addresses')
 const middleware = require('../utils/middleware')
 
 exports.list = (req, res, next) => {
-  Address.getAddresses((err, addresses) => {
+  middleware.checkToken(req, res, next)
+
+  let phone_number = req.decoded.phone_number || {}
+
+  Address.getAddresses(phone_number, (err, addresses) => {
     if (err)
       res.send(err);
 

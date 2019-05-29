@@ -10,6 +10,23 @@ const Address = (addresses) => {
   this.updated_at = addresses.updated_at || new Date()
 }
 
+Address.getAddresses = (phone_number, result) => {
+  if (phone_number === {}) {
+    result({ error: 'ไม่สามารถดึงข้อมูลได้' })
+  }
+  else {
+    knex.select('addresses.*')
+      .from('addresses')
+      .leftJoin('users', 'users.id', 'addresses.user_id')
+      // .whereNot({
+      //   'users.phone_number': phone_number
+      // })
+      .then(data => {
+        result(null, data)
+      })
+  }
+}
+
 Address.getAddress = (phone_number, result) => {
   if (phone_number === {}) {
     knex.select('*').from('addresses').then(data => {

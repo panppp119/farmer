@@ -44,8 +44,6 @@ class ProfileForm extends React.Component {
   };
 
   update = e => {
-    e.preventDefault();
-
     const { user, address } = this.props;
 
     const usr = {
@@ -77,14 +75,10 @@ class ProfileForm extends React.Component {
   };
 
   edit = e => {
-    e.preventDefault();
-
     this.setState({ edit: true });
   };
 
   cancel = e => {
-    e.preventDefault();
-
     this.setState({ edit: false });
   };
 

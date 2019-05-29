@@ -25,8 +25,6 @@ class WalletForm extends React.Component {
   };
 
   update = e => {
-    e.preventDefault();
-
     const { account_name, account_number, bank_name } = this.state;
     const { wallet, user } = this.props;
 
@@ -46,23 +44,9 @@ class WalletForm extends React.Component {
     this.setState({ edit: false });
   };
 
-  edit = e => {
-    e.preventDefault();
-
-    this.setState({ edit: true });
-  };
-
-  cancel = e => {
-    e.preventDefault();
-
-    this.setState({ edit: false });
-  };
-
-  withdraw = e => {
-    e.preventDefault();
-
-    this.setState({ withdraw: true });
-  };
+  edit = e => this.setState({ edit: true });
+  cancel = e => this.setState({ edit: false });
+  withdraw = e => this.setState({ withdraw: true });
 
   render() {
     const { account_name, account_number, bank_name, edit } = this.state;

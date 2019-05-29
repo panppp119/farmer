@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { withTheme } from "@material-ui/core/styles";
 import { MenuItem } from "@material-ui/core";
 import { TextField, Button } from "@material-ui/core";
@@ -14,15 +14,13 @@ const initialState = {
 };
 
 class RegisterForm extends React.Component {
-  state = initialState
+  state = initialState;
 
   handleChange = name => e => {
-    this.setState({ [name]: e.target.value })
+    this.setState({ [name]: e.target.value });
   };
 
   register = e => {
-    e.preventDefault();
-
     const data = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
@@ -30,34 +28,43 @@ class RegisterForm extends React.Component {
       password: this.state.password,
       gender: this.state.gender,
       birthday: this.state.birthday
-    }
+    };
 
-    this.props.signup(data)
-  }
+    this.props.signup(data);
+  };
 
   render() {
     const {
-      first_name, last_name, phone_number,
-      password, confirm_password, gender,
+      first_name,
+      last_name,
+      phone_number,
+      password,
+      confirm_password,
+      gender,
       birthday
     } = this.state;
 
     const { loading } = this.props;
 
     var disabled = false;
-    var pwMatched = false
+    var pwMatched = false;
 
-    pwMatched = confirm_password !== password
+    pwMatched = confirm_password !== password;
 
-    if (pwMatched === '' || first_name === '' ||
-      last_name === '' || gender === '' || birthday === '') {
-      disabled = true
+    if (
+      pwMatched === "" ||
+      first_name === "" ||
+      last_name === "" ||
+      gender === "" ||
+      birthday === ""
+    ) {
+      disabled = true;
     }
 
     const genderOptions = [
-      { label: 'ชาย', value: 1 },
-      { label: 'หญิง', value: 2 }
-    ]
+      { label: "ชาย", value: 1 },
+      { label: "หญิง", value: 2 }
+    ];
 
     return (
       <div
@@ -108,10 +115,10 @@ class RegisterForm extends React.Component {
           <TextField
             fullWidth
             select
-            label="เพศ"
+            label='เพศ'
             value={gender}
-            onChange={this.handleChange('gender')}
-            margin="normal"
+            onChange={this.handleChange("gender")}
+            margin='normal'
           >
             {genderOptions.map((option, i) => (
               <MenuItem key={i} value={option.value}>
@@ -121,13 +128,13 @@ class RegisterForm extends React.Component {
           </TextField>
           <TextField
             fullWidth
-            label="วันเกิด"
-            type="date"
+            label='วันเกิด'
+            type='date'
             value={birthday}
             InputLabelProps={{
-              shrink: true,
+              shrink: true
             }}
-            onChange={this.handleChange('birthday')}
+            onChange={this.handleChange("birthday")}
             style={{ marginTop: 16, marginBottom: 8 }}
           />
 

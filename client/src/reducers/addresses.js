@@ -1,6 +1,8 @@
 import { fromJS } from "immutable";
 
 import {
+  FETCH_ADDRESSES,
+  FETCH_ADDRESSES_SUCCEEDED,
   FETCH_ADDRESS,
   FETCH_ADDRESS_SUCCEEDED,
   ADD_ADDRESS,
@@ -18,6 +20,7 @@ export default (
   { type, scheme, response, error, payload }
 ) => {
   switch (type) {
+    case FETCH_ADDRESSES:
     case FETCH_ADDRESS:
     case ADD_ADDRESS:
     case UPDATE_ADDRESS:
@@ -29,8 +32,16 @@ export default (
     case UPDATE_ADDRESS_SUCCEEDED:
       return state.set("data", fromJS(response.body)).set("loading", false);
 
+    case FETCH_ADDRESSES_SUCCEEDED:
+      return state
+        .set("collection", fromJS(response.body))
+        .set("loading", false);
+
     case DELETE_ADDRESS_SUCCEEDED:
-      return state.set("data", fromJS(response.body)).set("loading", false);
+      return state
+        .set("data", fromJS(response.body))
+        .set("collection", fromJS(response.body))
+        .set("loading", false);
 
     default:
       return state;
