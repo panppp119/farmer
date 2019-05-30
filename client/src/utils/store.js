@@ -1,13 +1,10 @@
 import thunk from "redux-thunk";
-import { createBrowserHistory } from "history";
 import { applyMiddleware, compose, createStore } from "redux";
 import { routerMiddleware } from "connected-react-router";
 
 import rootReducer from "reducers";
 
-export const history = createBrowserHistory();
-
-export default function configureStore(preloadedState) {
+export default function configureStore(history) {
   const enhancers = [];
   const middleware = [thunk, routerMiddleware(history)];
 
@@ -24,11 +21,7 @@ export default function configureStore(preloadedState) {
     ...enhancers
   );
 
-  const store = createStore(
-    rootReducer(history),
-    preloadedState,
-    composedEnhancers
-  );
+  const store = createStore(rootReducer(history), composedEnhancers);
 
   if (module.hot) {
     module.hot.accept("reducers", () => {

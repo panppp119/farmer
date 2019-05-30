@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 let app = express();
 let port = process.env.PORT
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -19,10 +18,10 @@ app.options('*', cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use('/api', require('./routes'))
+app.use('/', require('./routes'))
 
 // app.get('/*', (req, res) => {
-//  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+//  res.sendFile(path.join(__dirname, 'client', 'index.html'));
 // })
 
 app.listen(port, () =>

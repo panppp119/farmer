@@ -3,14 +3,16 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { Provider } from "react-redux";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { ConnectedRouter } from "connected-react-router/immutable";
+import { createBrowserHistory } from "history";
 
 import CoreLayout from "./components/layouts/CoreLayout";
 
 import "./styles/core.scss";
 import theme from "styles/theme";
-import configureStore, { history } from "utils/store";
+import configureStore from "utils/store";
 
-const store = configureStore();
+const history = createBrowserHistory();
+const store = configureStore(history);
 
 const Home = lazy(() => import("./routes/apps/Home"));
 const SignIn = lazy(() => import("./routes/apps/SignIn"));

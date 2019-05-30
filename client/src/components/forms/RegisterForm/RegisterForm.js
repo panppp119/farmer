@@ -46,19 +46,19 @@ class RegisterForm extends React.Component {
 
     const { loading } = this.props;
 
-    var disabled = false;
+    var disabled = true;
     var pwMatched = false;
 
     pwMatched = confirm_password !== password;
 
     if (
-      pwMatched === "" ||
-      first_name === "" ||
-      last_name === "" ||
-      gender === "" ||
-      birthday === ""
+      !pwMatched &&
+      first_name !== "" &&
+      last_name !== "" &&
+      gender !== "" &&
+      birthday !== ""
     ) {
-      disabled = true;
+      disabled = false;
     }
 
     const genderOptions = [

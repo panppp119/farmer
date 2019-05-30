@@ -1,6 +1,6 @@
 import React from "react";
 import Numeral from "numeral";
-import { List } from "immutable";
+import { List, Map } from "immutable";
 import { Grid, Header, Modal } from "semantic-ui-react";
 import { withTheme } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
@@ -13,6 +13,11 @@ import WithdrawForm from "components/forms/WithdrawForm";
 import "./Home.scss";
 
 class Home extends React.Component {
+  static defaultProps = {
+    user: Map(),
+    wallet: Map()
+  };
+
   state = {
     modal: false
   };
@@ -58,15 +63,17 @@ class Home extends React.Component {
 
                 {this.modal()}
 
-                <Button
-                  fullWidth
-                  color='primary'
-                  variant='contained'
-                  onClick={this.withdraw}
-                  disabled={wallet.get("status") === 0}
-                >
-                  ถอนเงิน
-                </Button>
+                {!wallet.isEmpty() && (
+                  <Button
+                    fullWidth
+                    color='primary'
+                    variant='contained'
+                    onClick={this.withdraw}
+                    disabled={wallet.get("status") === 0}
+                  >
+                    ถอนเงิน
+                  </Button>
+                )}
               </div>
 
               <div className='activities card'>

@@ -1,29 +1,25 @@
-import React from 'react'
-import WebFont from 'webfontloader'
-import { hydrate, render } from "react-dom"
+import React from "react";
+import WebFont from "webfontloader";
+import { hydrate, render } from "react-dom";
 
-import App from './App';
-import * as serviceWorker from 'utils/serviceWorker';
+import App from "./App";
+import * as serviceWorker from "utils/serviceWorker";
 
 WebFont.load({
   google: {
-    families: ['Sarabun:300,400', 'sans-serif']
+    families: ["Sarabun:300,400", "sans-serif"]
   }
-})
+});
 
 const rootElement = document.getElementById("root");
 
 if (rootElement.hasChildNodes()) {
-  hydrate(
-    <App />, rootElement
-  );
+  hydrate(<App />, rootElement);
 } else {
-  render(
-    <App />, rootElement
-  );
+  render(<App />, rootElement);
 }
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();

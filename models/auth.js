@@ -95,10 +95,8 @@ Auth.signup = (body, result) => {
   })
 }
 
-Auth.signout = (phone_number, result) => {
-  knex('auth').where({ phone_number }).update({ access_token: '' }).then(data => {
-    result(null, { message: 'signout succeeded' })
-  })
+Auth.signout = (result) => {
+  result(null, { message: 'signout succeeded' })
 }
 
 module.exports = Auth

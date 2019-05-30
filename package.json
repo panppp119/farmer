@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon index",
     "client": "npm run start --prefix client",
-    "start": "concurrently \"pm2 start index.js -n 'Farmer API'\" \"npm run client\""
+    "start": "concurrently \"pm2 start index.js --watch\" \"npm run client\""
   },
   "author": "PanPPP",
   "license": "ISC",

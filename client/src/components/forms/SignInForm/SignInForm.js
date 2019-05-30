@@ -33,7 +33,6 @@ class SignInForm extends React.Component {
     if (phone_number !== "" && password !== "") {
       disabled = false;
     }
-    console.log(this.state, disabled);
 
     return (
       <div

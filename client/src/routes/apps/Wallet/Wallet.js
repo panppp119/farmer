@@ -31,15 +31,17 @@ class Wallet extends React.Component {
     return (
       <div className='wallet'>
         {wallet.isEmpty() && !add ? (
-          <Button
-            fullWidth
-            id='add-button'
-            variant='contained'
-            style={{ marginTop: 16 }}
-            onClick={this.add}
-          >
-            เพิ่มบัญชี
-          </Button>
+          <Container>
+            <Button
+              fullWidth
+              id='add-button'
+              variant='contained'
+              style={{ marginTop: 16 }}
+              onClick={this.add}
+            >
+              เพิ่มบัญชี
+            </Button>
+          </Container>
         ) : (
           <WalletForm
             user={this.props.user}
@@ -58,14 +60,16 @@ class Wallet extends React.Component {
               THB {Numeral(wallet.get("amount") || 0).format("0,0.00")}
             </Header>
 
-            <Button
-              fullWidth
-              color='primary'
-              variant='contained'
-              onClick={this.withdraw}
-            >
-              ถอนเงิน
-            </Button>
+            {!wallet.isEmpty() && (
+              <Button
+                fullWidth
+                color='primary'
+                variant='contained'
+                onClick={this.withdraw}
+              >
+                ถอนเงิน
+              </Button>
+            )}
           </div>
 
           <div className='activities card'>

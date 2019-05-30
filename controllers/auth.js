@@ -24,11 +24,7 @@ exports.sign_up = (req, res) => {
 }
 
 exports.sign_out = (req, res, next) => {
-  middleware.checkToken(req, res, next)
-
-  let phone_number = req.decoded.phone_number
-
-  Auth.signout(phone_number, (err, auth) => {
+  Auth.signout((err, auth) => {
     if (err)
       res.send(err);
 
