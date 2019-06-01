@@ -3,9 +3,12 @@ const knex = require('./db.js')
 const User = (user) => {
   this.first_name = user.first_name
   this.last_name = user.last_name
+  this.id_number = user.id_number
   this.phone_number = user.phone_number
   this.gender = user.gender
   this.birthday = user.birthday
+  this.main_job = user.main_job
+  this.second_job = user.second_job
   this.active = user.active
   this.created_at = user.created_at || new Date()
   this.updated_at = user.updated_at || new Date()

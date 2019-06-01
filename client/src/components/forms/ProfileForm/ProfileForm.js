@@ -1,34 +1,22 @@
 import React, { Fragment } from "react";
 import { Map } from "immutable";
 import { withTheme } from "@material-ui/core/styles";
-import { MenuItem } from "@material-ui/core";
 import { Grid, Container } from "semantic-ui-react";
-import { TextField, Button } from "@material-ui/core";
+import { MenuItem, TextField, Button } from "@material-ui/core";
 
 import GMap from "components/GMap";
 
 import "./ProfileForm.scss";
-
-const initialState = ({ user, address }) => ({
-  edit: false,
-  first_name: user.get("first_name"),
-  last_name: user.get("last_name"),
-  phone_number: user.get("phone_number"),
-  gender: user.get("gender"),
-  birthday: user.get("birthday"),
-  address: {
-    lat: address.get("lat"),
-    lng: address.get("lng"),
-    name: address.get("name")
-  }
-});
 
 class ProfileForm extends React.Component {
   static defaultProps = {
     user: Map()
   };
 
-  state = initialState;
+  state = {
+    edit: false,
+    address: {}
+  };
 
   componentDidUpdate(prevProps) {
     if (
@@ -89,6 +77,9 @@ class ProfileForm extends React.Component {
       gender,
       birthday,
       phone_number,
+      id_number,
+      main_job,
+      second_job,
       edit
     } = this.state;
     const { loading, user, address } = this.props;
@@ -99,7 +90,10 @@ class ProfileForm extends React.Component {
       first_name !== "" &&
       last_name !== "" &&
       gender !== "" &&
-      birthday !== ""
+      birthday !== "" &&
+      id_number !== "" &&
+      main_job !== "" &&
+      second_job !== ""
     ) {
       disabled = false;
     }
@@ -107,6 +101,15 @@ class ProfileForm extends React.Component {
     const genderOptions = [
       { label: "ชาย", value: 1 },
       { label: "หญิง", value: 2 }
+    ];
+
+    const jobOptions = [
+      { label: "ประกอบอาชีพเกษตร", value: 1 },
+      { label: "รับเงินเดือนประจำ", value: 2 },
+      { label: "รับจ้างทางการเกษตร", value: 2 },
+      { label: "ประกอบธุรกิจการค้า", value: 2 },
+      { label: "รับจ้างทั่วไป", value: 2 },
+      { label: "ทั่วไป", value: 2 }
     ];
 
     return (
@@ -135,6 +138,17 @@ class ProfileForm extends React.Component {
                     shrink: true
                   }}
                   onChange={this.handleChange("last_name")}
+                  disabled={!edit}
+                />
+                <TextField
+                  fullWidth
+                  label='เลขบัตรประชาชน'
+                  margin='normal'
+                  value={id_number || user.get("id_number")}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onChange={this.handleChange("id_number")}
                   disabled={!edit}
                 />
                 <TextField
@@ -178,6 +192,42 @@ class ProfileForm extends React.Component {
                   onChange={this.handleChange("birthday")}
                   disabled={!edit}
                 />
+                <TextField
+                  select
+                  fullWidth
+                  label='อาชีพหลัก'
+                  value={main_job || user.get("main_job")}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onChange={this.handleChange("main_job")}
+                  disabled={!edit}
+                  margin='normal'
+                >
+                  {jobOptions.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  select
+                  fullWidth
+                  label='อาชีพรอง'
+                  value={second_job || user.get("second_job")}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onChange={this.handleChange("second_job")}
+                  disabled={!edit}
+                  margin='normal'
+                >
+                  {jobOptions.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
 
                 {!address.isEmpty() && (
                   <div

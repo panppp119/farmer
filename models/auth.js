@@ -18,13 +18,14 @@ Auth.signin = (body, result) => {
 
   knex('users').where({ phone_number })
   .then(data => {
-    let user = data
+    let user = data[0]
 
     if (user.length !== 0) {
       let token_payload = { phone_number, password };
       let token = jwt.sign(token_payload, "t-herb_farmer", { expiresIn: '24h' });
       let response = {
-        access_token: token
+        access_token: token,
+        name: user.first_name
       }
 
       var update = {
@@ -33,11 +34,9 @@ Auth.signin = (body, result) => {
       }
 
       knex('auth')
-        .where({ user_id: user[0].id })
+        .where({ user_id: user.id })
         .update(update)
         .then(data => {
-          let id = user[0].id
-
           knex('users').where({ phone_number }).then(userData => {
             result(null, response)
           })
@@ -50,6 +49,7 @@ Auth.signin = (body, result) => {
 }
 
 Auth.signup = (body, result) => {
+  const role_id = body.role_id
   const new_user = {
     ...body,
     created_at: new Date(),
@@ -57,6 +57,7 @@ Auth.signup = (body, result) => {
   }
 
   delete new_user['password']
+  delete new_user['role_id']
 
   knex('users').insert(new_user).then(data => {
     let id = data[0]
@@ -81,12 +82,15 @@ Auth.signup = (body, result) => {
 
     let user_role = {
       user_id: id,
+      role_id: role_id,
       created_at: new Date(),
       updated_at: new Date()
     }
 
     knex('auth').insert(auth).then(authData => {
-      knex('user_roles').insert(user_role).then(roleData => {})
+      knex('user_roles').insert(user_role).then(roleData => {
+        console.log('added role')
+      })
 
       knex('users').where({ id }).then(userData => {
         result(null, response)

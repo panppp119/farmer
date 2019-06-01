@@ -3295,6 +3295,11 @@ component-emitter@^1.3.0:
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.3.0.tgz#16e4070fba8ae29b679f2215853ee181ab2eabc0"
   integrity sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==
 
+component-ie@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/component-ie/-/component-ie-1.0.0.tgz#0f9582ccb078a687592cc29eb46b3186e6fe637f"
+  integrity sha1-D5WCzLB4podZLMKetGsxhub+Y38=
+
 compressible@~2.0.14:
   version "2.0.16"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.16.tgz#a49bf9858f3821b64ce1be0296afc7380466a77f"
@@ -10938,6 +10943,13 @@ stylis@^3.5.0:
   version "3.5.4"
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
   integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
+
+superagent-no-cache@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/superagent-no-cache/-/superagent-no-cache-0.1.1.tgz#58ed8de9aeff053a9c98ae01dec4fde4b9f85fda"
+  integrity sha1-WO2N6a7/BTqcmK4B3sT95Ln4X9o=
+  dependencies:
+    component-ie "^1.0.0"
 
 superagent-prefix@^0.0.2:
   version "0.0.2"

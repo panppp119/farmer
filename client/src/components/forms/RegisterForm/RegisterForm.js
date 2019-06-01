@@ -27,6 +27,7 @@ class RegisterForm extends React.Component {
       phone_number: this.state.phone_number,
       password: this.state.password,
       gender: this.state.gender,
+      role_id: this.state.role_id,
       birthday: this.state.birthday
     };
 
@@ -40,6 +41,7 @@ class RegisterForm extends React.Component {
       phone_number,
       password,
       confirm_password,
+      role_id,
       gender,
       birthday
     } = this.state;
@@ -56,7 +58,8 @@ class RegisterForm extends React.Component {
       first_name !== "" &&
       last_name !== "" &&
       gender !== "" &&
-      birthday !== ""
+      birthday !== "" &&
+      role_id !== ""
     ) {
       disabled = false;
     }
@@ -64,6 +67,13 @@ class RegisterForm extends React.Component {
     const genderOptions = [
       { label: "ชาย", value: 1 },
       { label: "หญิง", value: 2 }
+    ];
+
+    const roleOptions = [
+      { label: "ผู้บริโภค", value: 2 },
+      { label: "คนขับรถ", value: 3 },
+      { label: "ร้านค้า", value: 4 },
+      { label: "เกษตรกร", value: 5 }
     ];
 
     return (
@@ -75,6 +85,20 @@ class RegisterForm extends React.Component {
         }}
       >
         <form noValidate autoComplete='off'>
+          <TextField
+            fullWidth
+            select
+            label='ประเภท'
+            value={role_id}
+            onChange={this.handleChange("role_id")}
+            margin='normal'
+          >
+            {roleOptions.map((option, i) => (
+              <MenuItem key={i} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
             fullWidth
             label='ชื่อ'

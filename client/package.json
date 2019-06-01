@@ -28,6 +28,7 @@
     "string": "^3.3.3",
     "styled-components": "^4.2.0",
     "superagent": "^5.0.5",
+    "superagent-no-cache": "^0.1.1",
     "superagent-prefix": "^0.0.2",
     "webfontloader": "^1.6.28"
   },

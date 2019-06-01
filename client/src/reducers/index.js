@@ -11,7 +11,8 @@ const rootReducer = history =>
     wallet: require("./wallet").default,
     market: require("./market").default,
     transactions: require("./transactions").default,
-    products: require("./products").default
+    products: require("./products").default,
+    farms: require("./farms").default
   });
 
 export default rootReducer;

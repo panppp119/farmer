@@ -1,4 +1,4 @@
-.profile-form {
+.farm-form {
   @media only screen and (max-width: 767px) {
     .ui.container {
       margin: 0 !important;
@@ -28,16 +28,11 @@
       margin-top: 0;
     }
   }
+  .farm-type {
+    padding-left: 30px;
 
-  .farms {
-    margin-top: 16px;
-
-    .farm-type {
-      padding-left: 30px;
-
-      label span {
-        padding: 5px;
-      }
+    label span {
+      padding: 5px;
     }
   }
 
@@ -47,7 +42,7 @@
     width: calc((100% - 48px) / 3);
   }
 
-  .farm-form {
+  .farm-card {
     border: 1px solid var(--primary);
     border-radius: 5px;
     padding: 16px;

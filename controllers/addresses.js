@@ -53,7 +53,6 @@ exports.update = (req, res, next) => {
   });
 }
 
-// delete address
 exports.delete = (req, res, next) => {
   middleware.checkToken(req, res, next)
 
